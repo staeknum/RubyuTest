@@ -1,0 +1,220 @@
+・セミコロン
+Rubyは区切りのセミコロンが必須ではない
+改行がセミコロンの代わりと解釈される
+print("Hello)
+
+もちろんセミコロンを入れてもOK
+print("hello);
+
+セミコロンを入れるとそこが区切りと認識されるため、プログラマが任意に区切りを指定できる。
+
+name ="Hello"; print(name);
+
+name = "Hello"
+print(name)
+
+上ふたつは同じ
+・コメント
+//と#は同じ
+/*
+*
+*/
+と
+begin=
+
+=end
+は同じ
+
+・文字コードが指定出来る(JavaはUTF-8)
+とはいえ、UTF-8推奨
+指定する際はグローバル変数「$KCODE」
+$KCODE = SJIS	Shift-JIS
+$KCODE = UTF8	UTF-8
+$KCODE = NONE	Ascii
+※デフォルトはNONE
+
+変更法(コンソールで実行)
+ruby -k「指定する文字コード」 Rubyファイル名
+SJIS -> S
+UTF8 -> U
+NONE -> N
+
+ruby -Ks プログラムファイル名
+ruby -Ke プログラムファイル名
+ruby -Ku プログラムファイル名
+ruby -Kn プログラムファイル名
+
+ソースコードの先頭に記述することで対応も出来る
+#! ruby -k「指定する文字コード」
+
+・String
+(Java)
+String str = new String("HogeHoge");
+String str = "HogeHoge";
+
+(Ruby)
+String.new("HugaHuga")
+str = "HugaHuga"
+str = 'HugaHuga'
+"HugaHuga"
+
+print() = System.out.println()
+sysoutがObjectクラスのメソッドであるように
+print()はKernelモジュールのメソッド。
+
+------------
+#! ruby Ku
+require "Kconv"
+
+print(Kconv.toutf8("こんにちは"))
+
+print(Kconv.tosjis('Hello'))
+puts "こんにちは".class()
+
+pref1 = "東京"
+		pref2 = pref1
+			
+			変数はあくまでオブジェクトに対する名札ですので、
+			変数「pref2」を新たに「東京」と言う文字列オブジェクトの名札にした場合でも
+			「東京」と言う文字列オブジェクトは1つのままです。
+			つまり1つのオブジェクトに2つの名札が付いている状態です。 
+		
+		str1 = "Tokyo"
+		str2 = str1
+
+		str1 << ",Japan" # <<演算子は別の文字列オブジェクトを作成しないことに注意
+
+		print(str1)
+		print(str2)
+		
+			上記の場合、どちらの「print」メソッドも「Tokyo,Japan」を出力します。
+		
+		str1 = "Tokyo"
+		str2 = str1
+
+		str1 = "Osaka"
+
+		print(str1)
+		print(str2)
+		
+			この場合、str1は"Osaka"という文字列オブジェクトを指すようになるので、
+			print(str1)	# Osaka
+			print(str2) # Tokyo
+			となる。
+tr1 << ",Japan" # <<演算子は別の文字列オブジェクトを作成しないことに注意
+puts str1
+
+alpha,bravo, charly,delta = "アルファ","ブラヴォー","チャーリー"
+  print(alpha,bravo,charly,delta)
+
+・複数行にまたがる長文の文字列
+Rubyは区切りが構文の切れ目と認識されてしまうのでこのような処理が必要になる。
+
+<<"任意の識別子"
+文字列～～～～
+～～～文字列
+任意の識別子
+
+<<"EOS"
+I couldn't look back 
+You'd gone away from me
+I felt my heart ache,
+I was afraid if falling you.
+EOS
+
+
+
+
+条件分岐
+
+		if 条件式 then
+		  条件式が真の時に実行する処理1
+		  条件式が真の時に実行する処理2
+		end
+		thenは省略可能。Javaと違ってセミコロンで判定しないので、条件式の後に改行があれば、
+		その時は判定式と判断される。
+
+
+    fruits = ["Apple", "Orange","PineApple"]
+   			 ==はJavaの==、eql?は文字列が同じなら別のオブジェクトでもtrue、equals?は同値性の検出
+   			 
+    if fruits[1].equal? "Orange"
+      print("onaji")
+    else
+      print ("tigau")
+    end
+ 
+ ・繰り返し文   
+    lang = ["Japanese","English","Spanish"]
+    lang.each do |la|
+      puts "#{la}を話せます。"
+
+      #(Java)   for(la : lang)
+      #          or
+      #         for(int i=0;i<lang.length();i++) {
+      #           String s = lang[i];
+      #          System.out.println(s)
+      #         }
+    end
+・HashMap(配列)
+    exam = {"subject" => "Math","score" =>80}
+    #    「subject」キーワードでは「Math」が呼び出される。
+    #    「score」キーワードでは80が呼び出される。
+    puts exam["subject"]
+
+    exam["subject"] = "science"
+    #値の更新
+    puts exam["subject"]
+  end
+
+  def Introduce(name)
+    puts "Hello"
+    puts "I'm #{name}"
+  end
+    String name ="J.K.Rolling"
+
+if 条件式 then
+trueの時１
+trueの時２
+else
+falseの時１
+falseの時２
+end
+		どちらかというとJavaよりもVBの構文に近い？
+		
+		
+if 条件式 then
+trueの時１
+trueの時２
+elsif 条件式 then		else if ではなく、elsif
+falseかつtrueの時
+falseかつtrueの時
+end
+
+unless 条件式　then
+falseの時１
+falseの時２
+end
+
+・switch文
+(Java)
+
+switch(条件式)
+	case:判定リテラル1
+		//do any code
+		break;
+	case:判定リテラル2	
+		break;
+	default;
+	
+(Ruby)
+case (条件式)
+	when 判定リテラル1 then
+	// do any code
+	when 判定リテラル2　then
+	
+	else
+	//どの処理にも該当しない場合
+
+
+
