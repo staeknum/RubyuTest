@@ -1,2 +1,2 @@
-# RubyuTest
+# RubyTest
 ruby learning
